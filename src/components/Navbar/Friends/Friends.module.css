@@ -1,0 +1,13 @@
+.friend {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.friend img{
+    height: 40px;
+    border-radius: 50%;
+}
+

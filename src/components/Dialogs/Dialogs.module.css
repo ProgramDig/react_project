@@ -1,2 +1,35 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
 
+.dialogs_item {
+    padding: 10px;
+}
 
+.dialogs_item .active {
+    color: gold;
+}
+
+.messages {
+    padding: 10px;
+}
+
+.message {
+
+}
+
+.addMessage{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.addMessage textarea{
+    height: 20px;
+}
+
+.addMessage button {
+    margin-left: 10px ;
+}
