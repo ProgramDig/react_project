@@ -1,7 +1,10 @@
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-const ADD_MESSAGE = 'ADD-MESSAGE'
-const UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE'
+import profileReducer from "./profileReduser";
+import messageReducer from "./messageReduser";
+import navBarReducer from "./navBarReduser";
+
+export function incrementId(data){
+    return data.length + 1;
+}
 
 let store = {
     _state: {
@@ -46,72 +49,12 @@ let store = {
         this._callSubscriber = observe; // pattern observer
     },
 
-    incrementId(data){
-        return data.length + 1;
-    },
-
-    addMessage(){
-        let newMessage = {
-            id: this.incrementId(this._state.messagePage.messageData),
-            message: this._state.messagePage.newMessageText
-        };
-        this._state.messagePage.messageData.push(newMessage);
-        this._state.messagePage.newMessageText = '';
-        this._callSubscriber(this._state);
-    },
-    updateNewMessage(newText) {
-        this._state.messagePage.newMessageText = newText;
-        this._callSubscriber(this._state)
-    },
-    addPost() {
-        let newPost = {
-            id: this.incrementId(this._state.profilePage.postsData),
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        };
-        this._state.profilePage.postsData.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber(this._state);
-    },
-    updateNewPostText(newText) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this._state);
-    },
-
     dispatch(action) {  // {type: 'ADD-POST' }
-        if(action.type === ADD_POST) {
-            this.addPost()
-        } else if(action.type === UPDATE_NEW_POST_TEXT){
-            this.updateNewPostText(action.newText)
-        } else if(action.type === ADD_MESSAGE) {
-            this.addMessage()
-        } else if(action.type === UPDATE_NEW_MESSAGE) {
-            this.updateNewMessage(action.newText)
-        }
-    }
-}
+        profileReducer(this._state.profilePage, action);
+        messageReducer(this._state.messagePage, action);
+        navBarReducer(this._state.navBarPage, action);
 
-export const addMessageActionCreator = () => {
-    return {
-        type: ADD_MESSAGE
-    }
-}
-export const updateNewMessageAction = (text) => {
-    return {
-        type: UPDATE_NEW_MESSAGE,
-        newText: text
-    }
-}
-
-export const addPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    }
-}
-export const updateNewPostTextAction = (text) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
+        this._callSubscriber(this._state);
     }
 }
 
